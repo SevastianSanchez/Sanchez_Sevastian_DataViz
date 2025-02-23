@@ -25,6 +25,7 @@ We will be using the 2017 wave of the HCMST survey - provided as `HCMST_couples.
 library(dplyr)
 library(tidyverse)
 library(ggthemes)
+library(patchwork)
 library(ggplot2)
 library(forcats)
 library(plotly)
@@ -331,12 +332,12 @@ df_status_mar <- df %>%
   filter(ship_status== "married")
 
 # Summarize counts of meeting types for married respondents
-pie_mar_df <- df_status %>%
+pie_mar_df <- df_status_mar %>%
   group_by(type_met) %>%
   dplyr::summarise(count = n(), .groups = "drop")
 
 # Pie chart: marriage across meeting types 
-graph7.1 <- ggplot(pie_ship_df, aes(x = "", y = count, fill = type_met)) +
+graph7.1 <- ggplot(pie_mar_df, aes(x = "", y = count, fill = type_met)) +
   geom_bar(stat = "identity", width = 1, color = "white")+ # Create bars
   scale_fill_manual(values = palette)+
   coord_polar("y", start = 0)+ # Transform to pie chart
@@ -430,7 +431,6 @@ interactive_pie_divsep
 
 ```{r}
 # Interactive Plot 2:
-
 ggplotly(graph_3)
 
 ```
